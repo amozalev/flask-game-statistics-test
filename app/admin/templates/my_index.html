@@ -1,0 +1,31 @@
+{% extends 'admin/index.html' %}
+{% block head_css %}
+{{ super() }}
+{#<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css', _external=False) }}">#}
+{#<link rel="stylesheet"#}
+{#      href="{{ url_for('static', filename='fonts/font-awesome/css/font-awesome.min.css', _external=False) }}">#}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>{% endblock %}
+{% block menu_links %}
+{{ super() }}
+<ul class="nav navbar-top-links navbar-right">
+    <li><a href="#"><i class="fa fa-home fa-fw"></i></a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Аккаунт пользователя">
+            <i class="fa fa-user fa-fw"></i>
+            <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+        </ul>
+    </li>
+</ul>
+{% endblock %}
