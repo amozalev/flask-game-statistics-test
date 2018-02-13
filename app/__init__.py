@@ -5,7 +5,16 @@ from app.api.views import api as api_blueprint
 from .api.models import db
 from app.admin.views import admin as admin_blueprint
 from app.admin.views import MyAdminIndexView
+import logging
+from logging.handlers import RotatingFileHandler
 import config
+
+# Configure logging
+logger = logging.getLogger(__name__)
+logger.setLevel(config.Config.LOGGING_LEVEL)
+handler = RotatingFileHandler("application.log", maxBytes=config.Config.LOG_FILE_SIZE)
+formatter = logging.Formatter(config.Config.LOGGING_FORMAT)
+handler.setFormatter(formatter)
 
 # Flask-admin index configuration
 admin = Admin(template_mode='bootstrap3',
@@ -20,6 +29,7 @@ def create_app():
 
     # Flask Migrate init
     migrate = Migrate(app, db)
+
     # Flask Admin init
     admin.init_app(app)
 
