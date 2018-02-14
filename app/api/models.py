@@ -18,7 +18,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, db.Sequence('event_id_seq'), primary_key=True, nullable=False)
     device_id = db.Column(db.Text, db.ForeignKey('device.id'), nullable=False)
     event_type_id = db.Column(db.Integer, db.ForeignKey('event_type.id'), nullable=False)
-    timestamp = db.Column(db.TIMESTAMP)
+    timestamp = db.Column(db.TIMESTAMP(timezone=True))
     level_name = db.Column(db.Text, nullable=True)
 
     def __str__(self):

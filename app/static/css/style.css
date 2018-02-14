@@ -1,0 +1,388 @@
+html, body {
+    height: 100%;
+    font-size: 15px;
+}
+
+[class*="col-"] {
+    padding: 5px;
+}
+
+.container-fluid, .row {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid, .row, #content {
+    height: 100%;
+}
+
+.btn-group {
+    margin-bottom: 10px;
+    width: initial;
+}
+
+.leftColForm {
+    padding: 10px;
+}
+
+/*.leftColForm .btn {*/
+/*width: 100%;*/
+/*}*/
+
+.leftColForm .checkbox-inline {
+    margin: 10px 0;
+    padding-left: 0;
+}
+
+.leftColForm input {
+    margin-right: 5px;
+}
+
+#content {
+    padding: 0;
+}
+
+#page-wrapper .panel {
+    margin-bottom: 0;
+}
+
+#tableTabPanel {
+    height: 41px;
+}
+
+.panel-default > .panel-heading, .panel-title {
+    font-size: 18px;
+    line-height: 1.1;
+}
+
+table {
+    color: #333;
+    font-size: 14px;
+    background: #fff;
+}
+
+thead {
+    border-bottom: 2px solid #000;
+}
+
+#dataTable {
+    margin-bottom: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 14px;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #f0ebeb;
+}
+
+.fixed-table-container tbody .selected td {
+    background-color: #B0BED9;
+}
+
+.sidebar {
+    margin-top: 40px;
+}
+
+/*.sidebar .sidebar-nav.navbar-collapse, .navbar {*/
+/*padding: 7px 0px;*/
+/*background: #F8F8F8;*/
+/*}*/
+
+.navbar-header {
+    width: 100%;
+}
+
+#navbar {
+    float: right;
+}
+
+.navbar, .navbar-brand {
+    margin-left: 0 !important;
+    height: 40px;
+    min-height: 40px;
+}
+
+.navbar-brand {
+    color: #337ab7 !important;
+    font-size: 1em;
+}
+
+.navbar-top-links li a {
+    min-height: 30px;
+}
+
+.nav-tabs > li > a {
+    border: 1px solid #1b6d85;
+    border-bottom: transparent;
+    background-color: #5BC0DE;
+}
+
+.nav > li > a, .navbar-brand {
+    padding: 10px 15px;
+}
+
+.btn {
+    font-size: 15px;
+}
+
+a:active, a:hover {
+    color: #555 !important;
+}
+
+#tab-content {
+    /*height: calc(100% - 42px);*/
+    /*overflow: auto;*/
+    border-left: 1px solid #ddd;
+}
+
+.tab-content > .active {
+    display: inline-block;
+}
+
+#datepicker input, #datepicker2 input {
+    margin-bottom: 10px;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.fixed-table-container tbody tr td:nth-child(2) {
+    min-width: 140px;
+}
+
+.modal-dialog {
+    width: 450px;
+}
+
+.modal-header {
+    padding: 15px 20px;
+}
+
+.modal-body {
+    padding: 0 15px;
+}
+
+.modal-body .row {
+    float: left;
+}
+
+#heatRow, #gvsRow {
+    padding: 10px 15px;
+    width: 50%;
+    float: left;
+    /*border-radius: 5px;*/
+}
+
+#heatRow {
+    border-right: 1px solid #CCC3C3;
+}
+
+#upHeatRow, #downHeatRow, #upGvsRow, #downGvsRow {
+    width: 100%;
+}
+
+.modal-body label {
+    /*margin-right: 35px;*/
+    padding: 5px 0;
+    width: 150px;
+    display: block;
+}
+
+.modal-body input {
+    margin-left: 10px !important;
+    float: right;
+    position: relative !important;
+}
+
+.modal-footer {
+    margin-top: 105px;
+}
+
+#loaderDiv {
+    top: 0;
+    padding: 20%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    opacity: 0.5;
+    display: none;
+    background: #000;
+    text-align: center;
+}
+
+#addRecalcSuccess {
+    margin: -45px 0 0 80%;
+    display: none;
+    position: fixed;
+    float: right;
+}
+
+/*a.icon:hover {*/
+/*opacity: 0.7;*/
+/*color: red;*/
+/*}*/
+
+.fa-check-square {
+    color: #449d44;
+}
+
+.fa-spinner {
+    color: #5BC0DE;
+    margin: 0 auto;
+}
+
+.glyphicon-export::before {
+    color: #337AB7;
+}
+
+.recalc_heat_gvs {
+    background: linear-gradient(to bottom, #F2DEDE 50%, #DFF0D8 50%);
+}
+
+.table-responsive > .fixed-columns-fixed {
+    position: absolute;
+    display: inline-block;
+    width: auto;
+    border-right: 2px solid #ddd;
+    background-color: #fff;
+}
+
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+    width: 100%;
+}
+
+.login-panel .panel-body {
+    padding: 15px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.navbar-toggle {
+    margin-top: 3px;
+}
+
+.fixed-table-toolbar {
+    /*position: relative;
+    top: -50px;*/
+    position: absolute;
+    /*top: 40px;*/
+    top: 0;
+    right: 20px;
+}
+
+.detail-view tr td, .detail-view tr th, .fixed-table-container tbody td:first-child {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+.tooltip-arrow {
+    border-right-color: #e11a1a !important;
+}
+
+.tooltip-inner {
+    font-size: 14px;
+    background-color: #e11a1a;
+}
+
+.recalculation {
+    background-color: #0a5933;
+}
+
+.nulling {
+    background-color: #590132;
+}
+
+#dataRepresentation .fixed-table-container {
+    padding-bottom: 0 !important;
+    /*padding-bottom: 41px !important;*/
+    border: none;
+}
+
+#unbalancesPanel, #noSignalPanel {
+    margin-top: 60px;
+}
+
+.fixed-table-body {
+    border-bottom: 1px solid #ddd;
+}
+
+#unbalancesPanel, #noSignalPanel {
+    /*margin-top: 50px;*/
+    display: none;
+}
+
+#deviceTitle {
+    width: 80%;
+    max-width: 600px;
+}
+
+.main {
+    margin-top: 40px;
+}
+
+#checked {
+    width: 100%;
+    margin: 10px 0;
+}
+
+#checked_label {
+    margin: 0 auto;
+    width: 200px;
+}
+
+/*.detail-view tr td, .detail-view tr th, .fixed-table-container tbody td:first-child {*/
+    /*min-width: 250px;*/
+/*}*/
+
+/*@media screen and (max-width: 1920px) {
+    .sidebar {
+        width: 17%;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .sidebar {
+        width: 17%;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .sidebar {
+        width: 17%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .sidebar {
+        width: 17%;
+    }
+}*/
+
+@media screen and (max-width: 768px) {
+    .panel-default > .panel-heading, .panel-title {
+        font-size: 1em;
+    }
+    /*.sidebar {
+        width: 100%;
+    }*/
+}
+
+/* --------- Для Auth --------------*/
+/*.wrong_data {*/
+/*padding: 10px 15px;*/
+/*color: red;*/
+/*}*/
+
+/* --------- Для Admin --------------*/
+
+/*.modal-dialog {*/
+/*width: 900px !important;*/
+/*}*/

@@ -3,8 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='vendor/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+
 </head>
 <body>
-
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            1
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 sidebar navbar-collapse collapse">
+            <div class="sidebar-nav">
+                <div class="panel panel-default">
+                    <div id="tableTabPanelHeading" class="panel-heading">Фильтр</div>
+                    <div class="panel-body">
+                        <form id="parametersForm" class="leftColForm" action="/get_devices_per_day" method="POST">
+                            <div class="input-daterange input-group" id="datepicker">
+                                {{ dates_form.hidden_tag() }}
+                                <input class="input-sm form-control date_start" id="date_start"
+                                       name="date_start"
+                                       placeholder="От даты"/>
+                                <input class="input-sm form-control date_end" id="date_end" name="date_end"
+                                       placeholder="До даты"/>
+                                <button class="btn btn-success" type="submit">Показать</button>
+                            </div>
+                            {#                            <button class="btn btn-success" type="submit">Показать</button>#}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
+            <div class="panel panel-default">
+                <div id="tableTabPanelHeading" class="panel-heading">Статистика</div>
+                <div class="panel-body">
+                    3
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'scripts.html' %}
+<script>
+    // Иницализация bootstrap datepicker ---------------------------------------------------
+    $('.input-daterange').datepicker({
+        maxViewMode: 0,
+        numberOfMonths: 2,
+        clearBtn: true,
+        language: "ru",
+        multidate: false,
+        autoclose: true,
+        calendarWeeks: true,
+        todayHighlight: true,
+        format: "yyyy-mm-dd",
+        beforeShowMonth: function (date) {
+            if (date.getMonth() === 8) {
+                return false;
+            }
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,15 +1,36 @@
 from flask import Blueprint, request, render_template, current_app
 from sqlalchemy.exc import SQLAlchemyError
 from .models import *
+from .forms import DatesForm
+import json
 
 api = Blueprint('api', __name__, template_folder='templates')
 
 
-@api.route('/')
+@api.route('/', methods=['GET', 'POST'])
 def index():
-    print('hello')
-    # return render_template('index.html')
-    return 'Hello!'
+    dates_form = DatesForm(request.form)
+    return render_template('index.html',
+                           dates_form=dates_form)
+
+
+@api.route('/get_devices_per_day', methods=['POST'])
+def get_devices_per_day():
+    dates_form = DatesForm(request.form)
+
+    date_start = request.form['date_start']
+    date_end = request.form['date_end']
+
+    # data = request.form
+    # for i, j in data.items():
+    #     date_start = i[]
+    #     print(i, j)
+    print(date_start, date_end)
+
+    return render_template('index.html',
+                           dates_form=dates_form)
+
+
 
 
 @api.route('/events', methods=['POST', 'GET'])

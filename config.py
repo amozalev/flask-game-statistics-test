@@ -4,8 +4,13 @@ import logging
 
 
 class Config(object):
+    CSRF_ENABLED = True
+    CSRF_SESSION_KEY = os.getenv('GAME_STAT_CSRF_SESSION_KEY')
+    WTF_CSRF_ENABLED = True
+    SECRET_KEY = 'dfgo78'
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:somePass9@localhost/game_stat'
+    SQLALCHEMY_DATABASE_URI = os.getenv('GAME_STAT_DB')
 
     # Logging
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
