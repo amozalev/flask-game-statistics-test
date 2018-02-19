@@ -17,3 +17,7 @@ class Config(object):
     LOGGING_LOCATION = 'application.log'
     LOGGING_LEVEL = logging.DEBUG
     LOG_FILE_SIZE = 10 * 1024 * 1024
+
+    # Flask login
+    SESSION_PROTECTION = 'strong'
+    # LOGIN_VIEW = 'auth.login
