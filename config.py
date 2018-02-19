@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 import logging
 
 
@@ -7,7 +6,7 @@ class Config(object):
     CSRF_ENABLED = True
     CSRF_SESSION_KEY = os.getenv('GAME_STAT_CSRF_SESSION_KEY')
     WTF_CSRF_ENABLED = True
-    SECRET_KEY = 'dfgo78'
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.getenv('GAME_STAT_DB')
@@ -20,4 +19,6 @@ class Config(object):
 
     # Flask login
     SESSION_PROTECTION = 'strong'
-    # LOGIN_VIEW = 'auth.login
+
+    DATE_START = "2018-02-01"
+    DATE_END = "2018-03-30"

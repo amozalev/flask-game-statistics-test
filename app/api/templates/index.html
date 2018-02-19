@@ -30,7 +30,7 @@
                 <div class="panel panel-default">
                     <div id="tableTabPanelHeading" class="panel-heading">Фильтр</div>
                     <div class="panel-body">
-                        <form id="parametersForm" class="leftColForm" action="{{ url_for('api.get_devices_per_day') }}"
+                        <form id="parametersForm" class="leftColForm" action="{{ url_for('api.get_data') }}"
                               method="POST">
                             <div class="input-daterange input-group" id="datepicker">
                                 {{ dates_form.hidden_tag() }}
@@ -50,7 +50,8 @@
             <div class="panel panel-default">
                 <div id="tableTabPanelHeading" class="panel-heading">Графики</div>
                 <div class="panel-body">
-                    <div id="curve_chart"></div>
+                    <div id="devices_chart"></div>
+                    <div id="levels_chart"></div>
                 </div>
             </div>
         </div>
@@ -77,13 +78,14 @@
     });
 </script>
 <script type="text/javascript">
-    google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages': ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawDevicesChart);
+    google.charts.setOnLoadCallback(drawLevelsChart);
 
-    function drawChart() {
-        var charts_data = {{ data.data|safe }};
-        var data = google.visualization.arrayToDataTable(charts_data);
-        var options = {
+    function drawDevicesChart() {
+        var devices_data = {{ data.devices_data|safe }};
+        var data1 = google.visualization.arrayToDataTable(devices_data);
+        var devices_options = {
             title: 'Кол-во устройств по дням',
             curveType: 'function',
             legend: 'none',
@@ -94,8 +96,26 @@
                 title: 'Кол-во устройств'
             }
         };
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
+        var devices_chart = new google.visualization.LineChart(document.getElementById('devices_chart'));
+        devices_chart.draw(data1, devices_options);
+    }
+
+    function drawLevelsChart() {
+        var levels_data = {{ data.levels_data|safe }};
+        var data2 = google.visualization.arrayToDataTable(levels_data);
+        var levels_options = {
+            title: 'Кол-во устройств, запускавшие уровни',
+            curveType: 'function',
+            legend: 'none',
+            hAxis: {
+                title: 'Уровни'
+            },
+            vAxis: {
+                title: 'Кол-во устройств'
+            }
+        };
+        var levels_chart = new google.charts.Bar(document.getElementById('levels_chart'));
+        levels_chart.draw(data2, google.charts.Bar.convertOptions(levels_options));
     }
 </script>
 </body>

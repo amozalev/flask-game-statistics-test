@@ -6,6 +6,7 @@ from .models import *
 from .forms import DatesForm
 from datetime import *
 import json
+import config
 
 api = Blueprint('api', __name__, template_folder='templates')
 
@@ -19,34 +20,55 @@ def index():
                            data=None)
 
 
-@api.route('/get_devices_per_day', methods=['POST'])
+@api.route('/get_data', methods=['POST'])
 @login_required
-def get_devices_per_day():
+def get_data():
     dates_form = DatesForm(request.form)
 
-    date_start = datetime.now()
-    date_end = datetime.now()
+    # Если поля для ввода дат оставлены пустыми:
+    date_start = config.Config.DATE_START
+    date_end = config.Config.DATE_END
 
+    # Если  поля для ввода дат заполнены:
     if request.form['date_start'] and request.form['date_end']:
         date_start = request.form['date_start']
         date_end = request.form['date_end']
 
-    query = db.session.query(func.Date(Event.timestamp), func.count(Device.name)). \
+    # Кол-во устройств за период --------------------------------------------------------
+    devices_query = db.session.query(func.Date(Event.timestamp), func.count(Device.name)). \
         join(Device). \
-        filter(Event.timestamp >= "2018-02-01",
-               Event.timestamp <= "2018-03-30"). \
+        filter(Event.timestamp >= date_start,
+               Event.timestamp <= date_end). \
         group_by(func.Date(Event.timestamp)). \
         order_by(func.Date(Event.timestamp))
 
-    data = list()
-    data.append(['Date', "Устройства"])
-    for i in query:
+    devices_data = list()
+    devices_data.append(['Date', "Devices"])
+    for i in devices_query:
         dttm = datetime.strftime(i[0], "%Y-%m-%d")
-        data.append([dttm, i[1]])
+        devices_data.append([dttm, i[1]])
+
+    # Кол-во устройств, запускавшие уровни игры за период ----------------------------------------------------
+    levels_query = db.session.query(Event.level_name,
+                                    func.count(Device.name)). \
+        join(Device). \
+        filter(Event.timestamp >= date_start,
+               Event.timestamp <= date_end). \
+        group_by(Event.level_name). \
+        order_by(Event.level_name)
+
+    levels_data = list()
+    levels_data.append(['Levels', "Devices"])
+    for i in levels_query:
+        level = i[0]
+        if i[0] is None:
+            level = str(0)
+        levels_data.append([level, i[1]])
 
     return render_template('index.html',
                            dates_form=dates_form,
-                           data={'data': json.dumps(data)})
+                           data={'devices_data': json.dumps(devices_data),
+                                 'levels_data': json.dumps(levels_data)})
 
 
 @api.route('/events', methods=['POST'])
