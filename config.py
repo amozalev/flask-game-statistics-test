@@ -3,6 +3,10 @@ import logging
 
 
 class Config(object):
+    # Конечно же, это только для разработки
+    HOST = '0.0.0.0'
+    PORT = 8000
+
     CSRF_ENABLED = True
     CSRF_SESSION_KEY = os.getenv('GAME_STAT_CSRF_SESSION_KEY')
     WTF_CSRF_ENABLED = True
