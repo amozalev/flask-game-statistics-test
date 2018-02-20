@@ -17,7 +17,7 @@ class Device(db.Model):
 class Event(db.Model):
     __tablename__ = 'event'
     id = db.Column(db.Integer, db.Sequence('event_id_seq'), primary_key=True)
-    device_id = db.Column(db.Text, db.ForeignKey('device.id', onupdate="CASCADE", ondelete="CASCADE"), nullable=False)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id', onupdate="CASCADE", ondelete="CASCADE"), nullable=False)
     event_type_id = db.Column(db.Integer, db.ForeignKey('event_type.id', onupdate="CASCADE", ondelete="CASCADE"),
                               nullable=False)
     timestamp = db.Column(db.TIMESTAMP(timezone=True))

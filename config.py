@@ -7,6 +7,7 @@ class Config(object):
     HOST = '0.0.0.0'
     PORT = 8000
 
+    TESTING = False
     CSRF_ENABLED = True
     CSRF_SESSION_KEY = os.getenv('GAME_STAT_CSRF_SESSION_KEY')
     WTF_CSRF_ENABLED = True

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, current_app
+from flask import Blueprint, request, render_template, current_app, jsonify
 from flask_login import login_required
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
@@ -35,12 +35,17 @@ def get_data():
         date_end = request.form['date_end']
 
     # Кол-во устройств за период --------------------------------------------------------
-    devices_query = db.session.query(func.Date(Event.timestamp), func.count(Device.name)). \
-        join(Device). \
-        filter(Event.timestamp >= date_start,
-               Event.timestamp <= date_end). \
-        group_by(func.Date(Event.timestamp)). \
-        order_by(func.Date(Event.timestamp))
+    devices_query = None
+    try:
+        devices_query = db.session.query(func.Date(Event.timestamp), func.count(Device.name)). \
+            join(Device). \
+            filter(Event.timestamp >= date_start,
+                   Event.timestamp <= date_end). \
+            group_by(func.Date(Event.timestamp)). \
+            order_by(func.Date(Event.timestamp))
+    except SQLAlchemyError as error:
+        db.session.rollback()
+        current_app.logger.error('Error during selection of device_query : %s', error, exc_info=True)
 
     devices_data = list()
     devices_data.append(['Date', "Devices"])
@@ -49,13 +54,18 @@ def get_data():
         devices_data.append([dttm, i[1]])
 
     # Кол-во устройств, запускавшие уровни игры за период ----------------------------------------------------
-    levels_query = db.session.query(Event.level_name,
-                                    func.count(Device.name)). \
-        join(Device). \
-        filter(Event.timestamp >= date_start,
-               Event.timestamp <= date_end). \
-        group_by(Event.level_name). \
-        order_by(Event.level_name)
+    levels_query = None
+    try:
+        levels_query = db.session.query(Event.level_name,
+                                        func.count(Device.name)). \
+            join(Device). \
+            filter(Event.timestamp >= date_start,
+                   Event.timestamp <= date_end). \
+            group_by(Event.level_name). \
+            order_by(Event.level_name)
+    except SQLAlchemyError as error:
+        db.session.rollback()
+        current_app.logger.error('Error during selection of levels_query : %s', error, exc_info=True)
 
     levels_data = list()
     levels_data.append(['Levels', "Devices"])
@@ -74,26 +84,7 @@ def get_data():
 @api.route('/events', methods=['POST'])
 @login_required
 def event():
-    json_data = request.get_json()
-
-    json_data = [{'device_id': '1', 'name': 'AppStart', 'timestamp': '2018-03-01 12:00'},
-                 {'device_id': '2', 'name': 'LevelStart', 'timestamp': '2018-03-01 11:10', 'level_name': 1},
-                 {'device_id': '3', 'name': 'LevelStart', 'timestamp': '2018-03-01 11:10', 'level_name': 1},
-                 {'device_id': '4', 'name': 'LevelStart', 'timestamp': '2018-02-15 11:10', 'level_name': 2},
-                 {'device_id': '1', 'name': 'LevelStart', 'timestamp': '2018-03-04 12:10', 'level_name': 1},
-                 {'device_id': '2', 'name': 'LevelStart', 'timestamp': '2018-02-10 11:10', 'level_name': 4},
-                 {'device_id': '3', 'name': 'LevelStart', 'timestamp': '2018-02-01 11:10', 'level_name': 1},
-                 {'device_id': '4', 'name': 'LevelStart', 'timestamp': '2018-02-10 11:10', 'level_name': 4},
-                 {'device_id': '1', 'name': 'LevelStart', 'timestamp': '2018-03-02 10:10', 'level_name': 1},
-                 {'device_id': '2', 'name': 'LevelStart', 'timestamp': '2018-02-01 15:10', 'level_name': 3},
-                 {'device_id': '3', 'name': 'LevelStart', 'timestamp': '2018-02-09 19:00', 'level_name': 2},
-                 {'device_id': '4', 'name': 'LevelStart', 'timestamp': '2018-02-10 12:10', 'level_name': 1},
-                 {'device_id': '1', 'name': 'LevelStart', 'timestamp': '2018-02-18 16:10', 'level_name': 3},
-                 {'device_id': '2', 'name': 'LevelStart', 'timestamp': '2018-03-01 11:10', 'level_name': 1},
-                 {'device_id': '3', 'name': 'LevelStart', 'timestamp': '2018-03-03 13:10', 'level_name': 1},
-                 {'device_id': '4', 'name': 'LevelStart', 'timestamp': '2018-04-01 11:10', 'level_name': 2},
-                 {'device_id': '1', 'name': 'LevelStart', 'timestamp': '2018-02-01 12:10', 'level_name': 1}
-                 ]
+    json_data = request.get_json(force=True)
 
     for event in json_data:
         # Проверка на наличие event_type в Events
@@ -139,4 +130,4 @@ def event():
             db.session.rollback()
             current_app.logger.error('Error during the event insertion : %s', error, exc_info=True)
 
-    return 'events'
+    return jsonify({'success': True})
